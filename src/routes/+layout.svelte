@@ -3,6 +3,8 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
+	import './styles.css';
+
 	onMount(() => {
 		const {
 			data: { subscription }
