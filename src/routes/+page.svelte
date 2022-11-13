@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Hom</title>
 	<meta name="description" content="Inisght Procedure" />
 </svelte:head>
 
