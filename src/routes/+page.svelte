@@ -1,5 +1,5 @@
 <script>
-	import { template } from '$lib/procedureTemplate';
+	//import { template } from '$lib/procedureTemplate';
 
 	import { supabaseClient } from '$lib/db';
 
@@ -10,6 +10,37 @@
 		console.log(data);
 		console.log(error);
 	};
+
+	const procedureOptions = [
+		{
+			ProcedureName: 'Transforaminal Epidural',
+			Diagnosis: ['Lumbar radiculopath (M54.16)', 'Lumbar Post Laminectomy Sydnrome'],
+			Region: ['lumbar', 'thoracic', 'cervical'],
+			Side: ['left', 'right', 'bilateral'],
+			Levels: ['L1/2', 'L2/3', 'L3/4', 'L4/5', 'L5/S1']
+		},
+		{
+			ProcedureName: 'Kyphoplasty',
+			Diagnosis: ['Vertebral compression fracture', 'Thoracic compression fracture'],
+			Region: ['lumbar', 'thoracic', 'cervical'],
+			Side: ['left', 'right', 'bilateral'],
+			Levels: ['L1/2', 'L2/3', 'L3/4', 'L4/5', 'L5/S1'],
+			'Trochar Size': ['16g', '18g'],
+			'Balloon Inflation': 'free text',
+			'Cement Volume': 'free text'
+		}
+	];
+
+	let procedureoptions = ['generalTemplate', 'kyphoplasty'];
+
+	let componenetname = null;
+	let chosencomponent = '';
+
+	$: {
+		console.log('chosencompenent', chosencomponent);
+		let temp = '../lib/components/' + chosencomponent + '.svelte';
+		import(/* @vite-ignore */ temp).then((res) => (componenetname = res.default));
+	}
 </script>
 
 <svelte:head>
@@ -49,42 +80,7 @@
 					/>
 				</svg>
 			</button>
-			<div class="navbar-collapse collapse grow items-center" id="navbarSupportedContentL">
-				<ul class="navbar-nav mr-auto flex flex-col md:flex-row">
-					<li class="nav-item">
-						<a
-							class="nav-link block p-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-							href="#!"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light">Home</a
-						>
-					</li>
-					<li class="nav-item">
-						<a
-							class="nav-link block p-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-							href="#!"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light">Features</a
-						>
-					</li>
-					<li class="nav-item">
-						<a
-							class="nav-link block p-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-							href="#!"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light">Pricing</a
-						>
-					</li>
-					<li class="nav-item">
-						<a
-							class="nav-link block p-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out"
-							href="#!"
-							data-mdb-ripple="true"
-							data-mdb-ripple-color="light">About</a
-						>
-					</li>
-				</ul>
-			</div>
+			<div class="navbar-collapse collapse grow items-center" id="navbarSupportedContentL" />
 		</div>
 	</nav>
 	<!-- Navbar -->
@@ -104,3 +100,17 @@
 	</div>
 	<!-- Jumbotron -->
 </header>
+
+<!-- <button
+	on:click={loadcomponent}
+	type="button"
+	class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+	>Button</button
+> -->
+
+<h3>Please choose procedure</h3>
+<select bind:value={chosencomponent}>
+	{#each procedureoptions as value}<option {value}>{value}</option>{/each}
+</select>
+
+<svelte:component this={componenetname} />
