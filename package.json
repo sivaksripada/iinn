@@ -24,6 +24,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.8.6"
+		"@supabase/auth-helpers-sveltekit": "^0.8.6",
+		"jspdf": "^2.5.1"
 	}
 }
